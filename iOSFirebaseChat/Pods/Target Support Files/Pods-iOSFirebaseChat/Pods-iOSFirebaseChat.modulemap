@@ -1,0 +1,6 @@
+framework module Pods_iOSFirebaseChat {
+  umbrella header "Pods-iOSFirebaseChat-umbrella.h"
+
+  export *
+  module * { export * }
+}
