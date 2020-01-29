@@ -3,18 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3BA44F0BF38E0ACDC38872A9 /* Pods_iOSFirebaseChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89F4ADEFEE83488190C70368 /* Pods_iOSFirebaseChat.framework */; };
 		DB3A024923E0D9FD0030BD0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A024823E0D9FD0030BD0E /* AppDelegate.swift */; };
 		DB3A024B23E0D9FD0030BD0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A024A23E0D9FD0030BD0E /* SceneDelegate.swift */; };
-		DB3A024D23E0D9FD0030BD0E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A024C23E0D9FD0030BD0E /* ViewController.swift */; };
 		DB3A025023E0D9FD0030BD0E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB3A024E23E0D9FD0030BD0E /* Main.storyboard */; };
 		DB3A025223E0D9FE0030BD0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB3A025123E0D9FE0030BD0E /* Assets.xcassets */; };
 		DB3A025523E0D9FE0030BD0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB3A025323E0D9FE0030BD0E /* LaunchScreen.storyboard */; };
 		DB3A025D23E0DA400030BD0E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB3A025C23E0DA400030BD0E /* GoogleService-Info.plist */; };
+		DB3A026123E0DDF50030BD0E /* ChatRoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026023E0DDF50030BD0E /* ChatRoomTableViewController.swift */; };
+		DB3A026423E0DE980030BD0E /* ThreadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026323E0DE980030BD0E /* ThreadController.swift */; };
+		DB3A026723E0DEC50030BD0E /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026623E0DEC50030BD0E /* Thread.swift */; };
+		DB3A026923E0DEFA0030BD0E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026823E0DEFA0030BD0E /* Message.swift */; };
+		DB3A026D23E0DF3C0030BD0E /* NetworkErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026C23E0DF3C0030BD0E /* NetworkErrorEnum.swift */; };
+		DB3A026F23E0DF4F0030BD0E /* Sender+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A026E23E0DF4F0030BD0E /* Sender+Default.swift */; };
+		DB3A027123E0DFD90030BD0E /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3A027023E0DFD90030BD0E /* MessagesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,12 +30,18 @@
 		DB3A024523E0D9FD0030BD0E /* iOSFirebaseChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFirebaseChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB3A024823E0D9FD0030BD0E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB3A024A23E0D9FD0030BD0E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DB3A024C23E0D9FD0030BD0E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DB3A024F23E0D9FD0030BD0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB3A025123E0D9FE0030BD0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB3A025423E0D9FE0030BD0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB3A025623E0D9FE0030BD0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB3A025C23E0DA400030BD0E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB3A026023E0DDF50030BD0E /* ChatRoomTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomTableViewController.swift; sourceTree = "<group>"; };
+		DB3A026323E0DE980030BD0E /* ThreadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadController.swift; sourceTree = "<group>"; };
+		DB3A026623E0DEC50030BD0E /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
+		DB3A026823E0DEFA0030BD0E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		DB3A026C23E0DF3C0030BD0E /* NetworkErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorEnum.swift; sourceTree = "<group>"; };
+		DB3A026E23E0DF4F0030BD0E /* Sender+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sender+Default.swift"; sourceTree = "<group>"; };
+		DB3A027023E0DFD90030BD0E /* MessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +70,6 @@
 				650F9732B78AB7B16B6395FF /* Pods-iOSFirebaseChat.debug.xcconfig */,
 				20ABB21528D0D1F1FC71F79D /* Pods-iOSFirebaseChat.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -69,6 +80,7 @@
 				DB3A024623E0D9FD0030BD0E /* Products */,
 				9D002313DEBDF4D83AA5A6FB /* Pods */,
 				73858BE75BD78DEBAAE53542 /* Frameworks */,
+				DB3A025E23E0DDA30030BD0E /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -83,16 +95,53 @@
 		DB3A024723E0D9FD0030BD0E /* iOSFirebaseChat */ = {
 			isa = PBXGroup;
 			children = (
-				DB3A024823E0D9FD0030BD0E /* AppDelegate.swift */,
-				DB3A024A23E0D9FD0030BD0E /* SceneDelegate.swift */,
-				DB3A024C23E0D9FD0030BD0E /* ViewController.swift */,
+				DB3A026523E0DEBC0030BD0E /* Models */,
+				DB3A026223E0DE7B0030BD0E /* Model Controllers */,
+				DB3A025F23E0DDB90030BD0E /* View Controllers */,
 				DB3A024E23E0D9FD0030BD0E /* Main.storyboard */,
-				DB3A025123E0D9FE0030BD0E /* Assets.xcassets */,
-				DB3A025323E0D9FE0030BD0E /* LaunchScreen.storyboard */,
 				DB3A025623E0D9FE0030BD0E /* Info.plist */,
 				DB3A025C23E0DA400030BD0E /* GoogleService-Info.plist */,
 			);
 			path = iOSFirebaseChat;
+			sourceTree = "<group>";
+		};
+		DB3A025E23E0DDA30030BD0E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB3A024823E0D9FD0030BD0E /* AppDelegate.swift */,
+				DB3A024A23E0D9FD0030BD0E /* SceneDelegate.swift */,
+				DB3A025123E0D9FE0030BD0E /* Assets.xcassets */,
+				DB3A025323E0D9FE0030BD0E /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DB3A025F23E0DDB90030BD0E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB3A026023E0DDF50030BD0E /* ChatRoomTableViewController.swift */,
+				DB3A027023E0DFD90030BD0E /* MessagesTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DB3A026223E0DE7B0030BD0E /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB3A026323E0DE980030BD0E /* ThreadController.swift */,
+			);
+			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		DB3A026523E0DEBC0030BD0E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DB3A026623E0DEC50030BD0E /* Thread.swift */,
+				DB3A026823E0DEFA0030BD0E /* Message.swift */,
+				DB3A026C23E0DF3C0030BD0E /* NetworkErrorEnum.swift */,
+				DB3A026E23E0DF4F0030BD0E /* Sender+Default.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,8 +260,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB3A024D23E0D9FD0030BD0E /* ViewController.swift in Sources */,
+				DB3A026F23E0DF4F0030BD0E /* Sender+Default.swift in Sources */,
+				DB3A026123E0DDF50030BD0E /* ChatRoomTableViewController.swift in Sources */,
+				DB3A026723E0DEC50030BD0E /* Thread.swift in Sources */,
+				DB3A026423E0DE980030BD0E /* ThreadController.swift in Sources */,
+				DB3A027123E0DFD90030BD0E /* MessagesTableViewController.swift in Sources */,
+				DB3A026923E0DEFA0030BD0E /* Message.swift in Sources */,
 				DB3A024923E0D9FD0030BD0E /* AppDelegate.swift in Sources */,
+				DB3A026D23E0DF3C0030BD0E /* NetworkErrorEnum.swift in Sources */,
 				DB3A024B23E0D9FD0030BD0E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
