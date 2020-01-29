@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+enum NetworkError: Error {
+    case noDecode
+    case noEncode
+    case badData
+    case timeout
+    case other(Error?)
+}

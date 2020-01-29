@@ -7,84 +7,205 @@
 //
 
 import UIKit
+import MessageKit
+import InputBarAccessoryView
 
-class ChatRoomTableViewController: UITableViewController {
+class ChatroomViewController: MessagesViewController {
+    // MARK: - Properties
+    
+    var threadController: ThreadController!
+    var thread: Thread?
 
+    let newThreadTitle = "Create new thread!"
+
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        messageInputBar.delegate = self
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        if let thread = thread {
+            threadController.observeMessages(
+                for: thread,
+                completion: messagesDidUpdate(withResult:))
+            self.title = thread.name
+        } else {
+            self.title = newThreadTitle
+        }
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        threadController.stopObserving()
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    // MARK: - Methods
+    
+    private func sendNewMessage(
+        with text: String,
+        completion: @escaping (String?) -> Void)
+    {
+        guard
+            let sender = currentSender() as? Sender,
+            !text.isEmpty
+            else { return }
+
+        threadController?.create(Message(sender: sender, text: text), in: thread!)
+        { error in
+            if let error = error {
+                completion("Error creating message: \(error)")
+            } else { completion(nil) }
+        }
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+    private func createNewThread(
+        named text: String,
+        completion: @escaping (String?) -> Void)
+    {
+        guard !text.isEmpty else { return }
 
-        // Configure the cell...
+        self.title = text
 
-        return cell
+        thread = Thread(name: text)
+        threadController?.create(Thread(name: text)) { error in
+            if let error = error {
+                self.thread = nil
+                self.title = self.newThreadTitle
+                completion("Error creating new chatroom: \(error)")
+            } else {
+                self.threadController.observeMessages(
+                    for: self.thread!,
+                    completion: self.messagesDidUpdate(withResult:))
+                completion(nil)
+            }
+        }
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    private func messagesDidUpdate(withResult result: Result<[Message], Error>) {
+        do {
+            thread?.setMessages(try result.get())
+            DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        } catch {
+            NSLog("Error updating messages from server: \(error)")
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
+// MARK: - MessagesDataSource
+
+extension ChatroomViewController: MessagesDataSource {
+    func currentSender() -> SenderType {
+        return threadController.currentUser ?? Sender(id: UUID().uuidString, displayName: "Unknown User")
+    }
+
+    func messageForItem(
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> MessageType {
+        guard let thread = thread else {
+            fatalError("No chatroom found for ChatroomViewController")
+        }
+        return thread.messages[indexPath.item]
+    }
+
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
+        return 1
+    }
+
+    func numberOfItems(
+        inSection section: Int,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> Int {
+        return thread?.messages.count ?? 0
+    }
+}
+
+// MARK: - MessagesLayoutDelegate
+
+extension ChatroomViewController: MessagesLayoutDelegate {
+    func messageTopLabelHeight(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> CGFloat {
+        return 20
+    }
+
+    func messageBottomLabelHeight(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> CGFloat {
+        return 20
+    }
+}
+
+// MARK: - MessagesDisplayDelegate
+
+extension ChatroomViewController: MessagesDisplayDelegate {
+    func inputBar(
+        _ inputBar: InputBarAccessoryView,
+        didPressSendButtonWith text: String)
+    {
+        func creationDidComplete(withErrorMessage errorMessage: String?) {
+            if let errorMessage = errorMessage {
+                NSLog(errorMessage)
+                DispatchQueue.main.async {
+                    inputBar.inputTextView.text = text
+                }
+            }
+            DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+            }
+        }
+
+        if thread == nil {
+            createNewThread(
+                named: text,
+                completion: creationDidComplete(withErrorMessage:))
+        } else {
+            sendNewMessage(
+                with: text,
+                completion: creationDidComplete(withErrorMessage:))
+        }
+
+        inputBar.inputTextView.text = ""
+    }
+
+    func textColor(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .black
+    }
+
+    func backgroundColor(
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView
+    ) -> UIColor {
+        return isFromCurrentSender(message: message) ? .blue : .green
+    }
+
+    func configureAvatarView(
+        _ avatarView: AvatarView,
+        for message: MessageType,
+        at indexPath: IndexPath,
+        in messagesCollectionView: MessagesCollectionView)
+    {
+        let avatar = Avatar(image: nil, initials: message.sender.displayName)
+        avatarView.set(avatar: avatar)
+    }
+}
+
+// MARK: - MessageInputBarDelegate
+
+extension ChatroomViewController: MessageInputBarDelegate {}
